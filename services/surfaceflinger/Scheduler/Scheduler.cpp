@@ -261,12 +261,14 @@ void Scheduler::resyncToHardwareVsync(bool makeAvailable, nsecs_t period) {
 }
 
 void Scheduler::resync() {
-    static constexpr nsecs_t kIgnoreDelay = ms2ns(750);
+    static constexpr nsecs_t kIgnoreDelay = ms2ns(400);
+    static constexpr nsecs_t kIgnoreCallbackDelay = ms2ns(400);
 
     const nsecs_t now = systemTime();
     const nsecs_t last = mLastResyncTime.exchange(now);
+    const nsecs_t lastCallback = mLastCallbackTime.exchange(now);
 
-    if (now - last > kIgnoreDelay) {
+    if (now - last > kIgnoreDelay || now - lastCallback > kIgnoreCallbackDelay) {
         resyncToHardwareVsync(false,
                               mRefreshRateConfigs.getCurrentRefreshRate().second.vsyncPeriod);
     }

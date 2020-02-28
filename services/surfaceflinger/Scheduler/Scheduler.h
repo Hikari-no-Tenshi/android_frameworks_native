@@ -249,6 +249,7 @@ private:
     bool mHWVsyncAvailable GUARDED_BY(mHWVsyncLock);
 
     std::atomic<nsecs_t> mLastResyncTime = 0;
+    std::atomic<nsecs_t> mLastCallbackTime = 0;
 
     std::unique_ptr<DispSync> mPrimaryDispSync;
     std::unique_ptr<EventControlThread> mEventControlThread;
