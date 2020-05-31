@@ -335,7 +335,6 @@ void OutputLayer::writeStateToHWC(bool includeGeometry) const {
                   static_cast<int32_t>(error));
         }
 
-#ifdef TARGET_USES_FOD_HACK
         int z = mState.z;
         if (strstr(mLayerFE->getDebugName(), "Fingerprint on display") != nullptr) {
             ALOGE("Found fingerprint on display!");
@@ -354,9 +353,6 @@ void OutputLayer::writeStateToHWC(bool includeGeometry) const {
         }
 
         if (auto error = hwcLayer->setZOrder(z); error != HWC2::Error::None) {
-#else
-        if (auto error = hwcLayer->setZOrder(mState.z); error != HWC2::Error::None) {
-#endif
             ALOGE("[%s] Failed to set Z %u: %s (%d)", mLayerFE->getDebugName(), mState.z,
                   to_string(error).c_str(), static_cast<int32_t>(error));
         }
