@@ -231,6 +231,9 @@ cc_library_shared {
                     "//hardware/qcom-caf/sm8150/display:libqdMetaData.system",
                 ],
             },
+            target_uses_fod_hack: {
+                cflags: ["-DTARGET_USES_FOD_HACK"],
+            },
         },
     },
 }
